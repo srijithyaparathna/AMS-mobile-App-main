@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:appointmentms/pages/Departments/Computer.dart';
 import 'package:appointmentms/pages/Departments/DCEE.dart';
 import 'package:appointmentms/pages/Departments/DEIE.dart';
@@ -6,7 +7,6 @@ import 'package:appointmentms/pages/Departments/Marine.dart';
 import 'package:appointmentms/widgets/AfterSignUpBottpm.dart';
 import 'package:appointmentms/widgets/ButtonText.dart';
 import 'package:appointmentms/widgets/app_largetext.dart';
-import 'package:flutter/material.dart';
 
 class DepartmentView extends StatefulWidget {
   const DepartmentView({Key? key}) : super(key: key);
@@ -25,8 +25,8 @@ class _DepartmentViewState extends State<DepartmentView> {
         preferredSize: Size.fromHeight(100.0),
         child: AppBar(
           backgroundColor: const Color(0xFFA1CCEB),
-           leading: Padding(
-            padding: const EdgeInsets.only(left: 4.0,top: 28), 
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 4.0, top: 28),
           ),
           flexibleSpace: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -47,17 +47,17 @@ class _DepartmentViewState extends State<DepartmentView> {
                   children: [
                     SizedBox(width: 75.0),
                     TextButton(
-            onPressed: () => _showMenu(context),
-            child: const Text(
-              'DEPARTMENTS',
-              style: TextStyle(
-                  color: Color(0xFF500512),
-                  decoration: TextDecoration.underline,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-                   
+                      onPressed: () => _showMenu(context),
+                      child: const Text(
+                        'DEPARTMENTS',
+                        style: TextStyle(
+                          color: Color(0xFF500512),
+                          decoration: TextDecoration.underline,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -70,7 +70,6 @@ class _DepartmentViewState extends State<DepartmentView> {
         padding: const EdgeInsets.only(top: 35),
         child: Column(
           children: [
-            //SizedBox(height: 0.0),
             AppLargeText(text: "APPOINTMENT MANAGEMENT"),
             AppLargeText(text: "SYSTEM"),
             AppLargeText(text: "FACULTY OF ENGINEERING"),
@@ -78,7 +77,7 @@ class _DepartmentViewState extends State<DepartmentView> {
           ],
         ),
       ),
-      bottomNavigationBar:  AfterLoginBottomNavigation(),
+      bottomNavigationBar: AfterLoginBottomNavigation(),
     );
   }
 
@@ -89,11 +88,11 @@ class _DepartmentViewState extends State<DepartmentView> {
       items: [
         PopupMenuItem(
           value: 'DEIE',
-          child:  AppLargeText3(text: "DEIE"), // You can customize the appearance here
+          child: AppLargeText3(text: "DEIE"), // You can customize the appearance here
         ),
         PopupMenuItem(
           value: 'COMPUTER',
-          child:  AppLargeText3(text: "COMPUTER"), // You can customize the appearance here
+          child: AppLargeText3(text: "COMPUTER"), // You can customize the appearance here
         ),
         PopupMenuItem(
           value: 'DCEE',
@@ -101,60 +100,55 @@ class _DepartmentViewState extends State<DepartmentView> {
         ),
         PopupMenuItem(
           value: 'DMME',
-          child:  AppLargeText3(text: "DMME"), // You can customize the appearance here
+          child: AppLargeText3(text: "DMME"), // You can customize the appearance here
         ),
-        
         PopupMenuItem(
           value: 'MENA',
-          child:  AppLargeText3(text: "MENA"), // You can customize the appearance here
+          child: AppLargeText3(text: "MENA"), // You can customize the appearance here
         ),
       ],
     );
 
     if (result != null) {
-    // Handle the selected value (result) here
-    
+      // Handle the selected value (result) here
 
-    // Navigate based on the selected role
-    if (result == 'DEIE') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>  DEIE(), 
-        ),
-      );
-    } else if (result == 'COMPUTER') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => COM()), 
+      // Navigate based on the selected role
+      if (result == 'DEIE') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DEIE(),
+          ),
         );
-      
-    }
-    else if (result == 'DCEE') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DCEE()), 
+      } else if (result == 'COMPUTER') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => COM(),
+          ),
         );
-      
-    }
-    else if (result == 'DMME') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DMME()), 
+      } else if (result == 'DCEE') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DCEE(),
+          ),
         );
-      
-    }
-    else if (result == 'MENA') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Marine()), 
+      } else if (result == 'DMME') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DMME(),
+          ),
         );
-      
+      } else if (result == 'MENA') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Marine(),
+          ),
+        );
+      }
     }
   }
-}
 }

@@ -15,7 +15,7 @@ class _IconbuttonsState extends State<Iconbuttons> {
 
   final List<Widget> _pages = [
     HomePage(),
-    CalenderPage(),
+   
     ContactUs(),
   ];
 

@@ -39,7 +39,7 @@ Future<void> _handleStaffLogin(String email, String password) async {
       };
         String jsonBody = jsonEncode(body);
       print(jsonBody);
-      String url = 'http://192.168.185.94/db/staff/login';
+      String url = 'http://192.168.1.3/db/staff/login';
       http.Response response = await http.post(
       Uri.parse(url),
       headers: {
@@ -50,7 +50,7 @@ Future<void> _handleStaffLogin(String email, String password) async {
       print("try");
       print("response");
       final responseData = json.decode(response.body);
-      if (true) {//responseData['Status'] == 'Success'
+      if (responseData['Status'] == 'Success') {//responseData['Status'] == 'Success'
         // Successful login
         print('Login successful');
          Navigator.push(
@@ -96,7 +96,7 @@ Future<void> _handleStaffLogin(String email, String password) async {
   }
 
 void _handleGoogleAuth() async {
-  const String url = 'http://192.168.92.94/auth/google';
+  const String url = 'http://192.168.1.3/auth/google';
   final Uri uri = Uri.parse(url); // Convert the URL string to a Uri object
 
   if (await canLaunch(uri.toString())) { // Use uri.toString() to get the URL string from the Uri object
