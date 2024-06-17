@@ -243,10 +243,11 @@ Widget build(BuildContext context) {
             _buildTableRow('End Time:', endTime),
             _buildTableRow('Status:', appointment['Apt_status']),
             TableRow(
+              
               children: [
                 TableCell(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),
+                    padding: EdgeInsets.symmetric(vertical: 8.0 , horizontal: 8.0),
                     child: Text('Actions:'),
                   ),
                 ),
