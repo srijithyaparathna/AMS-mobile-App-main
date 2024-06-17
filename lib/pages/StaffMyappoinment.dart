@@ -87,36 +87,37 @@ class _StaffMyappointmentState extends State<StaffMyappointment> {
   }
 }
 
-  Future<void> _rejectAppointment(String id) async {
-    try {
-      final url = Uri.parse('http://192.168.1.3/db/appointment');
-      final response = await http.put(
-        url,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'Id': id,
-          'Apt_status': 'Rejected',
-        }),
-      );
+  void _rejectAppointment(String id,String subject, String description, String startTime, String endTime, String aptStatus) async {
+     try {
+    final url = Uri.parse('http://192.168.1.3/db/appointment');
+    final response = await http.put(
+      url,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'Id': id,
+        'Subject': subject,
+        'Description': description,
+        'StartTime': startTime,
+        'EndTime': endTime,
+        'Apt_status': aptStatus,
+      }),
+    );
 
       if (response.statusCode == 200) {
-        print('Appointment rejected successfully');
-        // Assuming storedEmail is a global variable or accessible contextually
-        if (storedEmail != null) {
-          await fetchAppointments(storedEmail!);
-        }
-      } else {
-        print(
-            'Failed to reject appointment. Server responded with status code: ${response.statusCode}');
-        throw Exception('Failed to reject appointment');
+      print('Appointment updated successfully');
+      if (storedEmail != null) {
+        await fetchAppointments(storedEmail!);
       }
-    } catch (err) {
-      print('Error rejecting appointment: $err');
-      // Optionally, re-throw the error if further handling is needed
-      throw err;
+    } else {
+      print('Failed to update appointment. Server responded with status code: ${response.statusCode}');
+      throw Exception('Failed to update appointment');
     }
+  } catch (err) {
+    print('Error updating appointment: $err');
+    throw err;
+  }
   }
 
   @override
@@ -189,7 +190,17 @@ Widget build(BuildContext context) {
                           );
                         },
                         onReject: (id) {
-                          _rejectAppointment(id);
+                          _rejectAppointment(
+                          
+                          id,
+                            appointment['Subject'],
+                            appointment['Description'],
+                            appointment['StartTime'],
+                            appointment['EndTime'],
+                            'Blocked',
+                          
+                          
+                          );
                         },
                       );
                     },
