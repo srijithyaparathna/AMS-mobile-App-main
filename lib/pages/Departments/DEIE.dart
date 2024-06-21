@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart'; 
 import 'package:appointmentms/widgets/ButtonText.dart';
 import 'package:appointmentms/widgets/bottomnavigationLogin.dart';
 import 'package:appointmentms/widgets/AfterSignUpBottpm.dart';
+import 'package:appointmentms/pages/CalenderViews/DailyView.dart';
 
 class DEIE extends StatefulWidget {
   const DEIE({Key? key});
@@ -40,6 +42,21 @@ class _DEIEState extends State<DEIE> {
     }
   }
 
+  Future<void> storeEmail(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('staffEmail', email);
+  }
+
+  Future<void> printStoredEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('staffEmail');
+    if (email != null) {
+      print('Stored Email: $email');
+    } else {
+      print('No email found in SharedPreferences.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<dynamic> filteredStaff = allStaff.where((staff) => staff['Department'] == 'DEIE').toList();
@@ -50,7 +67,7 @@ class _DEIEState extends State<DEIE> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Department of"),
-            Text("Electrical And Information Engineering"),
+            Text("Electrical and Information Engineering"),
           ],
         ),
         backgroundColor: const Color(0xFFA1CCEB),
@@ -67,6 +84,16 @@ class _DEIEState extends State<DEIE> {
                   lastName: staff['Last_name'],
                   department: staff['Department'],
                   email: staff['Email'],
+                  onViewButtonPressed: () async {
+                    await storeEmail(staff['Email']);
+                    await printStoredEmail();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DailyView(selectedDate: DateTime.now()),
+                      ),
+                    );
+                  },
                 );
               },
             )
@@ -82,6 +109,7 @@ class StaffCard extends StatelessWidget {
   final String lastName;
   final String department;
   final String email;
+  final VoidCallback onViewButtonPressed;
 
   const StaffCard({
     required this.pictureUrl,
@@ -89,6 +117,7 @@ class StaffCard extends StatelessWidget {
     required this.lastName,
     required this.department,
     required this.email,
+    required this.onViewButtonPressed,
   });
 
   @override
@@ -131,10 +160,7 @@ class StaffCard extends StatelessWidget {
                   ),
                   SizedBox(height: 10), // Add some space between email and button
                   ElevatedButton(
-                    onPressed: () {
-                      // Add your view button logic here
-                      // For example, navigate to a detailed view of the staff member
-                    },
+                    onPressed: onViewButtonPressed,
                     child: Text('View'),
                   ),
                 ],

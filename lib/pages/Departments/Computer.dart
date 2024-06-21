@@ -1,115 +1,174 @@
-import 'package:appointmentms/pages/CalenderViews/DailyView.dart';
-import 'package:appointmentms/widgets/AfterSignUpBottpm.dart';
-import 'package:appointmentms/widgets/ButtonText.dart';
-import 'package:appointmentms/widgets/miniText.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart'; 
+import 'package:appointmentms/widgets/ButtonText.dart';
+import 'package:appointmentms/widgets/bottomnavigationLogin.dart';
+import 'package:appointmentms/widgets/AfterSignUpBottpm.dart';
+import 'package:appointmentms/pages/CalenderViews/DailyView.dart';
 
 class COM extends StatefulWidget {
-  const COM({super.key});
+  const COM({Key? key});
 
   @override
-  State<COM> createState() => _COMState();
+  _COMState createState() => _COMState();
 }
 
 class _COMState extends State<COM> {
+  String dropdownValue = 'Choose Role'; // Default value for the dropdown
+  List<dynamic> allStaff = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getAllStaff();
+  }
+
+  Future<void> getAllStaff() async {
+    try {
+      final url = Uri.parse('http://192.168.1.3/db/staffList');
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        setState(() {
+          allStaff = json.decode(response.body);
+        });
+      } else {
+        print('Error: ${response.statusCode}');
+        print('Message: ${response.reasonPhrase}');
+      }
+    } catch (err) {
+      print('Error: $err');
+    }
+  }
+
+  Future<void> storeEmail(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('staffEmail', email);
+  }
+
+  Future<void> printStoredEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('staffEmail');
+    if (email != null) {
+      print('Stored Email: $email');
+    } else {
+      print('No email found in SharedPreferences.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<dynamic> filteredStaff = allStaff.where((staff) => staff['Department'] == 'COM').toList();
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100.0),
-        child: AppBar(
-          backgroundColor: const Color(0xFFA1CCEB),
-           leading: Padding(
-            padding: const EdgeInsets.only(left: 4.0,top: 28), 
-          ),
-          flexibleSpace: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
+      appBar: AppBar(
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Department of"),
+            Text("Computer Engineering"),
+          ],
+        ),
+        backgroundColor: const Color(0xFFA1CCEB),
+        centerTitle: true,
+      ),
+      body: filteredStaff.isNotEmpty
+          ? ListView.builder(
+              itemCount: filteredStaff.length,
+              itemBuilder: (context, index) {
+                var staff = filteredStaff[index];
+                return StaffCard(
+                  pictureUrl: staff['Picture_URL'] ?? 'https://via.placeholder.com/150',
+                  firstName: staff['First_name'],
+                  lastName: staff['Last_name'],
+                  department: staff['Department'],
+                  email: staff['Email'],
+                  onViewButtonPressed: () async {
+                    await storeEmail(staff['Email']);
+                    await printStoredEmail();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DailyView(selectedDate: DateTime.now()),
+                      ),
+                    );
+                  },
+                );
+              },
+            )
+          : Center(child: CircularProgressIndicator()),
+      bottomNavigationBar: AfterLoginBottomNavigation(),
+    );
+  }
+}
+
+class StaffCard extends StatelessWidget {
+  final String pictureUrl;
+  final String firstName;
+  final String lastName;
+  final String department;
+  final String email;
+  final VoidCallback onViewButtonPressed;
+
+  const StaffCard({
+    required this.pictureUrl,
+    required this.firstName,
+    required this.lastName,
+    required this.department,
+    required this.email,
+    required this.onViewButtonPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.all(10.0),
+      child: Padding(
+        padding: EdgeInsets.all(15.0),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(pictureUrl),
+              radius: 30,
+            ),
+            SizedBox(width: 15),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 50.0),
-                  AppLargeText3(text: "Department of "),
-                  AppLargeText3(text: "Computer Engineering"),
+                  Text(
+                    '$firstName $lastName',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    'Department: $department',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    email,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  SizedBox(height: 10), // Add some space between email and button
+                  ElevatedButton(
+                    onPressed: onViewButtonPressed,
+                    child: Text('View'),
+                  ),
                 ],
               ),
-                const SizedBox(width  : 50.0),
-              /*Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Image.asset(
-                'assets/mech.jpg', // Replace with your image path
-                height: 65.0,
-                width: 65.0,
-                            ),
-              ),*/
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      body: 
-      SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 25,left: 25),
-          child: Column(
-            children: [Container(
-                    width: 170, 
-                    height: 120, 
-                    decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), 
-                color: Color.fromARGB(255, 180, 200, 212)
-                
-                    ),
-                  ),
-              
-              SizedBox(height: 1,),
-               Container(
-                    width: 170, 
-                    height: 75, 
-                    decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5), 
-                color: Color.fromARGB(255, 180, 200, 212),
-                    ),
-                    child: Column(
-                      children: [
-                        BottomText2(text: "ABC"),
-                        ElevatedButton(
-                      onPressed: () { 
-                      DateTime today = DateTime.now();
-                      var selectedDate;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            
-                            builder: (context) => DailyView(selectedDate:today, ), 
-                          ),
-                        );
-                  },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        
-                        backgroundColor: const Color(0xFF500512),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero,
-                        ),
-                      ),
-                      child: Text(
-                        "VIEW",
-                        style: const TextStyle(
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                        
-                      ],
-                    ),
-
-                  ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: AfterLoginBottomNavigation(),
     );
   }
 }

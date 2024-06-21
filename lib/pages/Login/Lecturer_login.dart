@@ -146,60 +146,60 @@ class _LectureLoginState extends State<LectureLogin> {
                 _handleLogin();
               },
             ),
-            Row(
-              children: [
-                SizedBox(width: 95.0),
-                BottomText2(text: "Forgot Password ?"),
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LecturepasswordReset1(),
-                    ),
-                  ),
-                  child: const Text(
-                    'RESET',
-                    style: TextStyle(
-                      color: Color(0xFF500512),
-                      decoration: TextDecoration.underline,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20.0),
-            GButton(
-              onPressed: () {
-                print("Google button clicked");
-                _handleGoogleAuth();
-              },
-            ),
-            SizedBox(height: 70.0),
-            Row(
-              children: [
-                SizedBox(width: 67.0),
-                BottomText2(text: "Don't have an account?"),
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => LecturerSignUp(),
-                    ),
-                  ),
-                  child: const Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                      color: Color(0xFF500512),
-                      decoration: TextDecoration.underline,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     SizedBox(width: 95.0),
+            //     BottomText2(text: "Forgot Password ?"),
+            //     TextButton(
+            //       onPressed: () => Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => LecturepasswordReset1(),
+            //         ),
+            //       ),
+            //       child: const Text(
+            //         'RESET',
+            //         style: TextStyle(
+            //           color: Color(0xFF500512),
+            //           decoration: TextDecoration.underline,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            //SizedBox(height: 20.0),
+            // GButton(
+            //   onPressed: () {
+            //     print("Google button clicked");
+            //     _handleGoogleAuth();
+            //   },
+            // ),
+            //SizedBox(height: 70.0),
+            // Row(
+            //   children: [
+            //     SizedBox(width: 67.0),
+            //     BottomText2(text: "Don't have an account?"),
+            //     TextButton(
+            //       onPressed: () => Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => LecturerSignUp(),
+            //         ),
+            //       ),
+            //       child: const Text(
+            //         'SIGN UP',
+            //         style: TextStyle(
+            //           color: Color(0xFF500512),
+            //           decoration: TextDecoration.underline,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

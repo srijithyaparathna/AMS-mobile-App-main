@@ -203,53 +203,53 @@ class _StudentLoginState extends State<StudentLogin> {
                 handleSubmit();
               },
             ),
-            Row(
-              children: [
-                SizedBox(width: 90.0),
-                BottomText2(text: "Forgot password ?"),
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => StudentpasswordReset1(),
-                    ),
-                  ),
-                  child: const Text(
-                    'RESET',
-                    style: TextStyle(
-                      color: Color(0xFF500512),
-                      decoration: TextDecoration.underline,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 70.0),
-            Row(
-              children: [
-                SizedBox(width: 67.0),
-                BottomText2(text: "Don't have an account?"),
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => StudentSignup1(),
-                    ),
-                  ),
-                  child: const Text(
-                    'SIGN UP',
-                    style: TextStyle(
-                      color: Color(0xFF500512),
-                      decoration: TextDecoration.underline,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     SizedBox(width: 90.0),
+            //     BottomText2(text: "Forgot password ?"),
+            //     TextButton(
+            //       onPressed: () => Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => StudentpasswordReset1(),
+            //         ),
+            //       ),
+            //       child: const Text(
+            //         'RESET',
+            //         style: TextStyle(
+            //           color: Color(0xFF500512),
+            //           decoration: TextDecoration.underline,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(height: 70.0),
+            // Row(
+            //   children: [
+            //     SizedBox(width: 67.0),
+            //     BottomText2(text: "Don't have an account?"),
+            //     TextButton(
+            //       onPressed: () => Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => StudentSignup1(),
+            //         ),
+            //       ),
+            //       child: const Text(
+            //         'SIGN UP',
+            //         style: TextStyle(
+            //           color: Color(0xFF500512),
+            //           decoration: TextDecoration.underline,
+            //           fontSize: 18,
+            //           fontWeight: FontWeight.bold,
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
           ],
         ),
       ),

@@ -67,7 +67,7 @@ class _DEIEState extends State<DCEE> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Department of"),
-            Text("Electrical And Information Engineering"),
+            Text("Civil and Environmental Engineering"),
           ],
         ),
         backgroundColor: const Color(0xFFA1CCEB),
