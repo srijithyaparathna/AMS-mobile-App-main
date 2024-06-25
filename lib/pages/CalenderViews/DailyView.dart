@@ -80,7 +80,7 @@ class _DailyViewState extends State<DailyView> {
 
   Future<Map<String, dynamic>> getStudentDetails(String storedRegNumber) async {
     try {
-      final url = 'http://192.168.1.3/db/student/details/$storedRegNumber';
+      final url = 'http://192.168.8.94/db/student/details/$storedRegNumber';
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
@@ -194,7 +194,7 @@ Future<void> addAppointmentBackend(
     String status) async {
   print("Posting appointment to database...");
   try {
-    final url = 'http://192.168.1.3/db/appointment/add';
+    final url = 'http://192.168.8.94/db/appointment/add';
     final response = await http.post(
       Uri.parse(url),
       headers: {

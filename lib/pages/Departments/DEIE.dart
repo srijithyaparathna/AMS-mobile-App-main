@@ -26,7 +26,7 @@ class _DEIEState extends State<DEIE> {
 
   Future<void> getAllStaff() async {
     try {
-      final url = Uri.parse('http://192.168.1.3/db/staffList');
+      final url = Uri.parse('http://192.168.8.94/db/staffList');
       final response = await http.get(url);
 
       if (response.statusCode == 200) {

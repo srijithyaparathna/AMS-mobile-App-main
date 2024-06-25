@@ -36,7 +36,7 @@ class _LectureLoginState extends State<LectureLogin> {
       };
       String jsonBody = jsonEncode(body);
       print(jsonBody);
-      String url = 'http://192.168.1.3/db/staff/login';
+      String url = 'http://192.168.8.94/db/staff/login';
       http.Response response = await http.post(
         Uri.parse(url),
         headers: {
@@ -103,7 +103,7 @@ class _LectureLoginState extends State<LectureLogin> {
   }
 
   void _handleGoogleAuth() async {
-    const String url = 'http://192.168.1.3/auth/google';
+    const String url = 'http://192.168.8.94/auth/google';
     final Uri uri = Uri.parse(url);
 
     if (await canLaunch(uri.toString())) {

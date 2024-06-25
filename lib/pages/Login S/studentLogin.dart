@@ -28,7 +28,7 @@ class _StudentLoginState extends State<StudentLogin> {
   void getRegNumber(String email) async {
     print("Getting registration number...");
     try {
-      String url = "http://192.168.1.3/db/student/regnumber/$email";
+      String url = "http://192.168.8.94/db/student/regnumber/$email";
       http.Response response = await http.get(Uri.parse(url));
 
       // Check if the response status code is 200 (OK)
@@ -108,7 +108,7 @@ class _StudentLoginState extends State<StudentLogin> {
       String jsonBody = jsonEncode(body);
       print(jsonBody);
 
-      String url = "http://192.168.1.3/db/student/login"; // API endpoint
+      String url = "http://192.168.8.94/db/student/login"; // API endpoint
       http.Response response = await http.post(
         Uri.parse(url),
         headers: {
